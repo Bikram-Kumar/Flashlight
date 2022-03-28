@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 
 
 import android.os.Bundle;
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         }
         
         toggleButton = findViewById(R.id.toggleButton);
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.onCheckedChangeListener() {
-            
-            @Override 
-            public void onCheckedChange(CompoundButton buttonView, boolean isChecked) {
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 switchFlashLight(isChecked);
             }
             
@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
     }
     
     public void showNoFlashError() {
-        AlertDialog alert = new AlertDialog.Builder(this).create;
+        AlertDialog alert = new AlertDialog.Builder(this).create();
         alert.setTitle("Alert");
         alert.setMessage("Sorry, your device has no Flashlight. Please use this app on a device with Flashlight.");
         
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, "Exit", new DialogInterface.onClickListener() {
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, "Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
