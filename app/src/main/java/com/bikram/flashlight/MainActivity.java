@@ -17,12 +17,15 @@ import android.os.Bundle;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
 
+import android.widget.ImageView;
+
 
 public class MainActivity extends AppCompatActivity {
     
     private CameraManager mCameraManager;
     private String mCameraId;
     private ToggleButton toggleButton;
+    private ImageView flashlightImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         }
         
         toggleButton = findViewById(R.id.toggleButton);
+        flashlightImage = findViewById(R.id.flashlightImage);
+        
+        
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -70,11 +76,19 @@ public class MainActivity extends AppCompatActivity {
     }
     
     public void switchFlashLight(boolean status) {
+        if (status) {
+            flashlightImage.setImageResource(R.drawable.flashlight_on);
+        } else {
+            flashlightImage.setImageResource(R.drawable.flashlight_off);
+        }
+        
+        
         try {
             mCameraManager.setTorchMode(mCameraId, status);
         } catch(CameraAccessException e) {
             e.printStackTrace();
         }
+        
     }
     
     
