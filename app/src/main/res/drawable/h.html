@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=false, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css" media="all">
+        #main-container {
+            display: block;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+         #btn {
+            display: block;
+            background: red;
+            border: none;
+            position: absolute;
+            top: 39%;
+            left: 45%;
+            width: 7%;
+            height: 7%;
+        }
+        img {
+            display: block;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        
+    <img src="./flashlight_off.png" alt="" />
+    <button id="btn"></button>
+    
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        var div = document.getElementById('main-container');
+        var img = document.querySelector('img');
+        var btn = document.querySelector('#btn');
+        img.onload = onload = onresize = onorientationchange = fitImage;
+        
+        function fitImage() {
+            imgAsp = img.naturalWidth / img.naturalHeight;
+            windAsp = innerWidth / innerHeight;
+            
+            if (imgAsp < windAsp) {
+                img.width = innerWidth;
+                img.height = innerWidth / imgAsp;
+            } else {
+                img.width = innerHeight * imgAsp;
+                img.height = innerHeight;
+            }
+        }
+    </script>
+</body>
+</html>
