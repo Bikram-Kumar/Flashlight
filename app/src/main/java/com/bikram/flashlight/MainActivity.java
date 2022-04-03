@@ -1,5 +1,7 @@
 package com.bikram.flashlight;
 
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -124,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
         imgAsp = imgWidth / imgHeight;
         
         // flashlightImage is the ImageView and img the Drawable
+
+        Log.i("bki",Integer.toString(imgHeight));
+        Log.i("bki",Integer.toString(imgWidth));
 
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
         if (imgAsp < windowAsp) {
