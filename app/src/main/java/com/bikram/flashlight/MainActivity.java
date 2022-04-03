@@ -3,6 +3,8 @@ package com.bikram.flashlight;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.Configuration;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 
@@ -18,6 +20,7 @@ import android.widget.ToggleButton;
 import android.widget.CompoundButton;
 
 import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private String mCameraId;
     private ToggleButton toggleButton;
     private ImageView flashlightImage;
+    
+    private Resources res;
+    private Configuration config;
+    private Drawable img;
+    private int windowWidth, windowHeight, windowAsp;
+    private int imgWidth, imgHeight, imgAsp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +43,15 @@ public class MainActivity extends AppCompatActivity {
         
         
         boolean isFlashAvailable = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        
         if (!isFlashAvailable) {
             showNoFlashError();
         }
+        setCameraManagerAndId();
         
-        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try {
-            mCameraId = mCameraManager.getCameraIdList()[0];
-            
-        } catch(CameraAccessException e) {
-            e.printStackTrace();
-        }
+        
+        res = getResources();
+        img = res.getDrawable(R.drawable.flashlight_off, null);
+        
         
         toggleButton = findViewById(R.id.toggleButton);
         flashlightImage = findViewById(R.id.flashlightImage);
@@ -75,6 +81,16 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
     
+    private void setCameraManagerAndId() {
+        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            mCameraId = mCameraManager.getCameraIdList()[0];
+            
+        } catch(CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void switchFlashLight(boolean status) {
         if (status) {
             flashlightImage.setImageResource(R.drawable.flashlight_on);
@@ -89,6 +105,29 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         
+    }
+    
+    
+    public void fitImageToScreen() {
+        config = res.getConfiguration();
+        
+        windowWidth = config.screenWidthDp;
+        windowHeight = config.screenHeightDp;
+        windowAsp = windowWidth / windowHeight;
+        
+        imgWidth = img.getIntrinsicWidth();
+        imgHeight = img.getIntrinsicHeight();
+        imgAsp = imgWidth / imgHeight;
+        
+        // flashlightImage is the ImageView and img the Drawable
+        
+        if (imgAsp < windowAsp) {
+            flashlightImage.getLayoutParams().width = windowWidth;
+            flashlightImage.getLayoutParams().height = windowWidth / imgAsp;
+        } else {
+            flashlightImage.getLayoutParams().width = windowHeight * imgAsp;
+            flashlightImage.getLayoutParams().height = windowHeight;
+        }
     }
     
     

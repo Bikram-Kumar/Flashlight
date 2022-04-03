@@ -3,39 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background_black"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     tools:context=".MainActivity">
 
 
     <ImageView
         android:id="@+id/flashlightImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         android:src="@drawable/flashlight_off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ToggleButton
         android:id="@+id/toggleButton"
-        android:layout_width="42dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="339dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#00FFFFFF"
-        android:text="ToggleButton"
-        android:textColor="#00FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textOn=" "
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/flashlightImage"
-        app:layout_constraintTop_toTopOf="@+id/flashlightImage" />
+        app:layout_constraintTop_toTopOf="@+id/flashlightImage" 
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
