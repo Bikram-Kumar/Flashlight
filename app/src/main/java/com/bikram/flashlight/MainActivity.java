@@ -1,7 +1,9 @@
 package com.bikram.flashlight;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Configuration;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         
         res = getResources();
         img = res.getDrawable(R.drawable.flashlight_off, null);
+
+        fitImageToScreen();
         
         
         toggleButton = findViewById(R.id.toggleButton);
@@ -120,14 +124,16 @@ public class MainActivity extends AppCompatActivity {
         imgAsp = imgWidth / imgHeight;
         
         // flashlightImage is the ImageView and img the Drawable
-        
+
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
         if (imgAsp < windowAsp) {
-            flashlightImage.getLayoutParams().width = windowWidth;
-            flashlightImage.getLayoutParams().height = windowWidth / imgAsp;
+            lp.width = windowWidth;
+            lp.height = windowWidth / imgAsp;
         } else {
-            flashlightImage.getLayoutParams().width = windowHeight * imgAsp;
-            flashlightImage.getLayoutParams().height = windowHeight;
+            lp.width = windowHeight * imgAsp;
+            lp.height = windowHeight;
         }
+        flashlightImage.setLayoutParams(lp);
     }
     
     
