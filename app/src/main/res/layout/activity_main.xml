@@ -28,8 +28,15 @@
         app:layout_constraintTop_toTopOf="@+id/flashlightImage" 
         app:layout_constraintWidth_percent="0.07" 
         app:layout_constraintHeight_percent="0.07" 
+<<<<<<< HEAD
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp" />
+=======
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="10dp"
+        android:layout_width="10dp" />
+>>>>>>> refs/remotes/origin/master
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
