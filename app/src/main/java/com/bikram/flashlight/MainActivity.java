@@ -29,14 +29,16 @@ public class MainActivity extends AppCompatActivity {
     
     private CameraManager mCameraManager;
     private String mCameraId;
-    private ToggleButton toggleButton;
-    private ImageView flashlightImage;
+    ToggleButton toggleButton;
+    ImageView flashlightImage;
     
-    private Resources res;
-    private Configuration config;
-    private Drawable img;
-    private int windowWidth, windowHeight, windowAsp;
-    private int imgWidth, imgHeight, imgAsp;
+    Resources res;
+    Configuration config;
+    ConstraintLayout.LayoutParams lp;
+    Drawable img;
+    
+    private double windowWidth, windowHeight, windowAsp;
+    private double imgWidth, imgHeight, imgAsp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         
         // flashlightImage is the ImageView and img the Drawable
 
-        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
+        lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
         if (imgAsp < windowAsp) {
             lp.width = windowWidth;
             lp.height = windowWidth / imgAsp;
