@@ -58,12 +58,10 @@ public class MainActivity extends AppCompatActivity {
         res = getResources();
         img = res.getDrawable(R.drawable.flashlight_off, null);
 
-        fitImageToScreen();
-        
-        
         toggleButton = findViewById(R.id.toggleButton);
         flashlightImage = findViewById(R.id.flashlightImage);
         
+        fitImageToScreen();
         
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -129,18 +127,21 @@ public class MainActivity extends AppCompatActivity {
         
         // flashlightImage is the ImageView and img the Drawable
 
-        lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
-        Log.i("bki",Integer.toString(imgHeight));
-        Log.i("bki",Integer.toString(imgWidth));
+       lp = (ConstraintLayout.LayoutParams) flashlightImage.getLayoutParams();
 
+       
         if (imgAsp < windowAsp) {
-            lp.width = windowWidth;
-            lp.height = windowWidth / imgAsp;
+            lp.width = (int) dpToPx(windowWidth);
+            lp.height = (int) dpToPx(windowWidth / imgAsp);
         } else {
-            lp.width = windowHeight * imgAsp;
-            lp.height = windowHeight;
+            lp.width = (int) dpToPx(windowHeight * imgAsp);
+            lp.height = (int) dpToPx(windowHeight);
         }
         flashlightImage.setLayoutParams(lp);
+    }
+
+    private double dpToPx(double dp) {
+        return dp * res.getDisplayMetrics().density;
     }
     
     
