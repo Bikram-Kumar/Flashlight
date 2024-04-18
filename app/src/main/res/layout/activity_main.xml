@@ -40,16 +40,17 @@
         android:id="@+id/morseCoderButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#FFFFFFFF"
+        android:background="#00FFFFFF"
         android:textOff=" "
         android:textOn=" "
+        android:onClick="showMorseCoderConfigDialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.670"
+        app:layout_constraintVertical_bias="0.63"
         app:layout_constraintWidth_percent="0.15" />
 
 
