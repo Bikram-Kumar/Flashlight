@@ -3,13 +3,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
-    buildToolsVersion "32.0.0"
+    namespace = "com.bikram.flashlight"
+    compileSdk = 32
+    buildToolsVersion "35.0.0"
 
     defaultConfig {
         applicationId "com.bikram.flashlight"
-        minSdk 24
-        targetSdk 32
+        minSdk = 24
+        targetSdk = 32
         versionCode 1
         versionName "1.0"
 

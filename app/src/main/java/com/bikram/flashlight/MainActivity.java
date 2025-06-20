@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
@@ -28,7 +29,11 @@ import android.widget.ImageView;
 import android.graphics.drawable.Drawable;
 
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+    Handler handler;
 
     private CameraManager mCameraManager;
     private String mCameraId;
@@ -40,12 +45,8 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout.LayoutParams lp;
     Drawable img;
 
-    private double windowWidth,
-    windowHeight,
-    windowAsp;
-    private double imgWidth,
-    imgHeight,
-    imgAsp;
+    private double windowWidth, windowHeight, windowAsp;
+    private double imgWidth, imgHeight, imgAsp;
 
     MorseCoderConfig morseCoderConfigDialog = new MorseCoderConfig();
 
@@ -71,13 +72,18 @@ public class MainActivity extends AppCompatActivity {
         fitImageToScreen();
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 switchFlashLight(isChecked);
             }
 
         });
+        
+        handler = new Handler();
+        
+        // MorseController needs a reference for switching the flashlight
+        MorseController.mainActivity = this;
+        
     }
 
     public void showNoFlashError() {
