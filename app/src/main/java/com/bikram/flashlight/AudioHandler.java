@@ -3,6 +3,7 @@ package com.bikram.flashlight;
 import android.media.AudioTrack;
 import android.media.AudioManager;
 import android.media.AudioFormat;
+import android.media.AudioAttributes;
 
 public abstract class AudioHandler {
     static AudioTrack audioTrack;
@@ -13,14 +14,20 @@ public abstract class AudioHandler {
     static boolean isPlaying = false;
     
     static {
-        audioTrack = new AudioTrack(AudioManager.MODE_NORMAL, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, buffLength, AudioTrack.MODE_STREAM);
+        AudioAttributes attributes = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .build();
+
+        AudioFormat audioFormat = new AudioFormat.Builder()
+            .setSampleRate(sampleRate)
+            .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+            .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+            .build();
+            
+        audioTrack = new AudioTrack(attributes, audioFormat, buffLength, AudioTrack.MODE_STREAM, 0);
     }
     
-    static void init() {
-        if (audioTrack == null) {
-            audioTrack = new AudioTrack(AudioManager.MODE_NORMAL, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, buffLength, AudioTrack.MODE_STREAM);
-        }
-    }
     
     static void play() {
         if(isPlaying) return;

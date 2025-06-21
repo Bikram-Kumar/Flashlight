@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
         
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         
         // MorseController needs a reference for switching the flashlight
         MorseController.mainActivity = this;
