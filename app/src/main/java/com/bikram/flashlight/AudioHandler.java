@@ -10,7 +10,6 @@ public abstract class AudioHandler {
     static int sampleRate = 44100;
     static int buffLength = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
-    static Thread thread;
     static boolean isPlaying = false;
     
     static {
@@ -40,14 +39,13 @@ public abstract class AudioHandler {
     
     static void generate() {
         short[] frame_out = new short[buffLength];
-        int amplitude = (int) (32767);
-        int frequency = 440;
+        int amplitude = Short.MAX_VALUE;
         double twopi = 2.0 * Math.PI;
         double phase = 0.0;
         while (isPlaying) {
             for (int i = 0; i < buffLength; i++) {
-                frame_out[i] = (short) (amplitude * Math.sin(phase));
-                phase += twopi * frequency / sampleRate;
+                frame_out[i] = (short)(amplitude * Math.sin(phase));
+                phase += twopi * MorseCoderConfig.frequency / sampleRate;
                 if (phase > twopi) {
                     phase -= twopi;
                 }
@@ -60,6 +58,7 @@ public abstract class AudioHandler {
         if (!isPlaying) return;
         isPlaying = false;
         audioTrack.pause();
+        audioTrack.flush();
     }
     
     

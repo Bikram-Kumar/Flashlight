@@ -12,7 +12,16 @@ import android.app.Dialog;
 import androidx.fragment.app.DialogFragment;
 import android.content.DialogInterface;
 
+import com.google.android.material.slider.Slider;
+
+
+
 public class MorseCoderConfig extends DialogFragment {
+    static String message = "SOS";
+    static int frequency = 1200;
+    static int speed = 50;
+    static boolean isTransmitting = false;
+    
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -20,38 +29,58 @@ public class MorseCoderConfig extends DialogFragment {
         View morseCoderConfigLayout = getLayoutInflater().inflate(R.layout.morse_coder_config_layout, null);
         
         EditText morseText = morseCoderConfigLayout.findViewById(R.id.morseText);
-        TextView morseDigitalText = morseCoderConfigLayout.findViewById(R.id.morseDigitalText);
         TextView morseSymbolicText = morseCoderConfigLayout.findViewById(R.id.morseSymbolicText);
+        
+        Slider speedSlider = morseCoderConfigLayout.findViewById(R.id.morseSpeedSlider);
+        Slider frequencySlider = morseCoderConfigLayout.findViewById(R.id.morseFrequencySlider);
+        
+        Button toggleTransmitBtn = morseCoderConfigLayout.findViewById(R.id.toggleTransmitBtn);
+        
+        morseText.setText(message);
+        morseSymbolicText.setText(MorseCoder.textToSymbolic(message));
         
         morseText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {}  
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {} 
             public void onTextChanged(CharSequence s, int start, int before, int count) {  
-                morseDigitalText.setText(MorseCoder.textToDigital(s.toString()));
-                morseSymbolicText.setText(MorseCoder.textToSymbolic(s.toString()));
+                message = s.toString();
+                morseSymbolicText.setText(MorseCoder.textToSymbolic(message));
             }  
         });
         
-        
-        ((Button)morseCoderConfigLayout.findViewById(R.id.startMsgBtn)).setOnClickListener((View v) -> {
-                MorseController.startTransmit(MorseCoder.textToDigital(morseText.getText().toString()));
+        speedSlider.setValue(speed);
+        speedSlider.addOnChangeListener((slider, value, fromUser) -> {
+                speed = (int)value;
         });
+        
+        frequencySlider.setValue(frequency);
+        frequencySlider.addOnChangeListener((slider, value, fromUser) -> {
+                frequency = (int)value;
+        });
+        
+        
+        toggleTransmitBtn.setOnClickListener((View v) -> {
+            if (isTransmitting) {
+                MorseController.stopTransmit();
+                toggleTransmitBtn.setText("Start");
+            } else {
+                MorseController.startTransmit(MorseCoder.textToDigital(message));
+                toggleTransmitBtn.setText("Stop");
+            }
+            isTransmitting = !isTransmitting;
+        });
+        
         
         builder.setView(morseCoderConfigLayout);
-       
-        builder.setPositiveButton(MorseCoder.textToDigital("a"), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
         
-        builder.setNegativeButton(MorseCoder.textToSymbolic("bx"), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //
-            }
-        });
-        
-
         return builder.create();
         
     }
+    
+    
+    static int getPeriod() {
+        return (300 + 17 * (100-speed)); // 0-100 -> 2000-300
+    }
+    
+    
 }

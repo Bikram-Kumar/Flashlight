@@ -1,60 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="32dp"
+>
+    
+    <TextView android:text="Morse Code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+    />
     
     <EditText android:text=""
         android:id="@+id/morseText"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:inputType="text"
         android:hint="Type message"
     />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+    >
+        <TextView android:text=".."
+            android:id="@+id/morseSymbolicText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="16dp"
+            android:textColor="@color/green"
+            android:gravity="center"
+            android:layout_gravity="center"
+        />
+    </ScrollView>
     
-    <TextView android:text="10"
-        android:id="@+id/morseDigitalText"
-        android:layout_width="fill_parent"
+    
+    <TextView android:text="Speed"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="16dp"
-        android:gravity="center"
     />
     
-    <TextView android:text=".."
-        android:id="@+id/morseSymbolicText"
-        android:layout_width="fill_parent"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/morseSpeedSlider"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:textSize="16dp"
-        android:gravity="center"
-    />
-    
-    <EditText android:text=""
-        android:id="@+id/morseTimePeriod"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:inputType="number"
-        android:hint="Period in ms"
+        android:valueFrom="0"
+        android:valueTo="100"
+        android:stepSize="1"
+        app:tickVisible="false"
     />
     
     
+    <TextView android:text="Frequency (Hz)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textSize="16sp"
+    />
+    
+    <com.google.android.material.slider.Slider
+        android:id="@+id/morseFrequencySlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="100"
+        android:valueTo="10000"
+        android:stepSize="1"
+        app:tickVisible="false"
+    />
+        
+        
     
     <Button
-        android:id="@+id/startMsgBtn"
-        android:layout_width="64dp"
+        android:id="@+id/toggleTransmitBtn"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Start"
     />
+        
+    
     
     
     

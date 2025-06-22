@@ -6,10 +6,9 @@ import java.util.TimerTask;
 public abstract class MorseController {
     static MainActivity mainActivity;
     static String code;
-    static int counter;
+    static int counter, counterAud;
     static Runnable runnable;
     static Timer timer;
-    static long period = 1000;
 
     static {
         runnable = new Runnable () {
@@ -23,24 +22,30 @@ public abstract class MorseController {
                 mainActivity.switchFlashLight(MorseController.code.charAt(MorseController.counter) == '1');
                 MorseController.counter++;
                 
-                mainActivity.handler.postDelayed(this, MorseController.period);
+                mainActivity.handler.postDelayed(this, MorseCoderConfig.getPeriod());
             }
         };
     }
 
     static void startTransmit(String code) {
-        MorseController.code = code;
-        // clear old thread
-        mainActivity.handler.removeCallbacks(runnable);
         
+        mainActivity.handler.removeCallbacks(runnable);
         if(timer != null) timer.cancel();
         
+        MorseController.code = code;
         timer = new Timer();
         
-        counter = 0;
-        mainActivity.handler.postDelayed(runnable, 100);
-        timer.schedule(new AudioTask(), 100);
+        counter = 0; counterAud = 0;
+        mainActivity.handler.postDelayed(runnable, 10);
+        timer.schedule(new AudioTask(), 10);
         
+    }
+    
+    static void stopTransmit() {
+        mainActivity.handler.removeCallbacks(runnable);
+        if(timer != null) timer.cancel();
+        AudioHandler.stop();
+        mainActivity.switchFlashLight(false);
     }
     
 }
@@ -48,18 +53,18 @@ public abstract class MorseController {
 class AudioTask extends TimerTask {
     @Override
     public void run() {
-        if (MorseController.counter >= MorseController.code.length()) {
+        if (MorseController.counterAud >= MorseController.code.length()) {
             AudioHandler.stop();
-            MorseController.timer.cancel();
             return;
         }
         
-        if (MorseController.code.charAt(MorseController.counter) == '1') {
+        if (MorseController.code.charAt(MorseController.counterAud) == '1') {
             AudioHandler.play();
         } else {
             AudioHandler.stop();
         }
         
-        MorseController.timer.schedule(new AudioTask(), MorseController.period);
+        MorseController.counterAud++;
+        MorseController.timer.schedule(new AudioTask(), MorseCoderConfig.getPeriod());
     }
 };
