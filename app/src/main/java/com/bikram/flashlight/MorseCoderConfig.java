@@ -21,9 +21,13 @@ public class MorseCoderConfig extends DialogFragment {
     static int frequency = 1200;
     static int speed = 50;
     static boolean isTransmitting = false;
+    static boolean dialogOpen = false;
+    static Button toggleTransmitBtn;
     
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        
+        dialogOpen = true;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         
         View morseCoderConfigLayout = getLayoutInflater().inflate(R.layout.morse_coder_config_layout, null);
@@ -34,7 +38,9 @@ public class MorseCoderConfig extends DialogFragment {
         Slider speedSlider = morseCoderConfigLayout.findViewById(R.id.morseSpeedSlider);
         Slider frequencySlider = morseCoderConfigLayout.findViewById(R.id.morseFrequencySlider);
         
-        Button toggleTransmitBtn = morseCoderConfigLayout.findViewById(R.id.toggleTransmitBtn);
+        toggleTransmitBtn = morseCoderConfigLayout.findViewById(R.id.toggleTransmitBtn);
+        
+        toggleTransmitBtn.setText(isTransmitting ? "Stop" : "Start");
         
         morseText.setText(message);
         morseSymbolicText.setText(MorseCoder.textToSymbolic(message));
@@ -62,19 +68,23 @@ public class MorseCoderConfig extends DialogFragment {
         toggleTransmitBtn.setOnClickListener((View v) -> {
             if (isTransmitting) {
                 MorseController.stopTransmit();
-                toggleTransmitBtn.setText("Start");
             } else {
                 MorseController.startTransmit(MorseCoder.textToDigital(message));
-                toggleTransmitBtn.setText("Stop");
             }
-            isTransmitting = !isTransmitting;
         });
+        
         
         
         builder.setView(morseCoderConfigLayout);
         
         return builder.create();
         
+    }
+    
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        dialogOpen = false;
+        super.onDismiss(dialog);
     }
     
     

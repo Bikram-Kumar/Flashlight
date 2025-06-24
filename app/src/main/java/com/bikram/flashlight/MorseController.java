@@ -15,7 +15,7 @@ public abstract class MorseController {
             @Override
             public void run() {
                 if (MorseController.counter >= MorseController.code.length()) {
-                    mainActivity.switchFlashLight(false);
+                    MorseController.stopTransmit();
                     return;
                 }
                 
@@ -39,6 +39,8 @@ public abstract class MorseController {
         mainActivity.handler.postDelayed(runnable, 10);
         timer.schedule(new AudioTask(), 10);
         
+        MorseCoderConfig.isTransmitting = true;
+        if (MorseCoderConfig.dialogOpen) MorseCoderConfig.toggleTransmitBtn.setText("Stop");
     }
     
     static void stopTransmit() {
@@ -46,6 +48,9 @@ public abstract class MorseController {
         if(timer != null) timer.cancel();
         AudioHandler.stop();
         mainActivity.switchFlashLight(false);
+        
+        MorseCoderConfig.isTransmitting = false;
+        if (MorseCoderConfig.dialogOpen) MorseCoderConfig.toggleTransmitBtn.setText("Start");
     }
     
 }
@@ -54,7 +59,7 @@ class AudioTask extends TimerTask {
     @Override
     public void run() {
         if (MorseController.counterAud >= MorseController.code.length()) {
-            AudioHandler.stop();
+            MorseController.stopTransmit();
             return;
         }
         
